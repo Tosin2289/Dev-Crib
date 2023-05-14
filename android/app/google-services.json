@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "279262074999",
+    "project_id": "da-hood-751b1",
+    "storage_bucket": "da-hood-751b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279262074999:android:741152e7a55f2131ea8e72",
+        "android_client_info": {
+          "package_name": "com.example.da_hood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279262074999-thjojl0isd0epelfde37d3muio8f7h51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdW3D83PW-jWseOHxh_kSmUJk3MVVIRKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279262074999-thjojl0isd0epelfde37d3muio8f7h51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

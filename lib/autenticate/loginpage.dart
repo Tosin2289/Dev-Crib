@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 import '../widgets/button.dart';
 import '../widgets/text_field.dart';
+import 'forgotpasswordpage.dart';
 
 class LoginPage extends StatefulWidget {
-  Function()? onTap;
+  final Function()? onTap;
   LoginPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
@@ -14,6 +17,33 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+  void signin() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+          child: CircularProgressIndicator(
+        color: Colors.black,
+      )),
+    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailcontroller.text,
+        password: passwordcontroller.text,
+      );
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      displayMessage(e.code);
+    }
+  }
+
+  void displayMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,11 +93,19 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const Forgot();
+                            },
+                          ));
+                        },
                         child: const Text(
                           "Forget password",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                              fontSize: 16),
                         ),
                       ),
                     ],
@@ -76,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   MyButton(
-                    onTap: () {},
+                    onTap: signin,
                     text: 'Login',
                   ),
                   const SizedBox(
@@ -95,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         width: 4,
                       ),
-                      GestureDetector(
-                        onTap: widget.onTap,
+                      TextButton(
+                        onPressed: widget.onTap,
                         child: const Text(
                           "Register now",
                           style: TextStyle(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button.dart';
@@ -16,6 +17,37 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   final confirmpasswordcontroller = TextEditingController();
+  void signup() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+          child: CircularProgressIndicator(
+        color: Colors.black,
+      )),
+    );
+    if (passwordcontroller.text != confirmpasswordcontroller.text) {
+      Navigator.pop(context);
+      displayMessage("Password Dont Match!");
+      return;
+    }
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailcontroller.text, password: passwordcontroller.text);
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      displayMessage(e.code);
+    }
+  }
+
+  void displayMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     size: 100,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   const Text(
                     "Let's create an account for you",
@@ -43,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontSize: 16),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   MytextField(
                     controller: namecontroller,
@@ -78,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   MyButton(
-                    onTap: () {},
+                    onTap: signup,
                     text: 'Sign up',
                   ),
                   const SizedBox(
@@ -97,8 +129,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(
                         width: 4,
                       ),
-                      GestureDetector(
-                        onTap: widget.onTap,
+                      TextButton(
+                        onPressed: widget.onTap,
                         child: const Text(
                           "Sign in",
                           style: TextStyle(

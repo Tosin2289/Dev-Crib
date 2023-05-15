@@ -1,14 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class CribPosts extends StatelessWidget {
+import 'like_button.dart';
+
+class CribPosts extends StatefulWidget {
   final String message;
   final String user;
+  final String postId;
+  final List<String> likes;
+  const CribPosts(
+      {Key? key,
+      required this.message,
+      required this.user,
+      required this.likes,
+      required this.postId})
+      : super(key: key);
 
-  const CribPosts({
-    Key? key,
-    required this.message,
-    required this.user,
-  }) : super(key: key);
+  @override
+  State<CribPosts> createState() => _CribPostsState();
+}
+
+class _CribPostsState extends State<CribPosts> {
+  final currentuser = FirebaseAuth.instance.currentUser!;
+  bool isLiked = false;
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.likes.contains(currentuser.email);
+  }
+
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked;
+    });
+    DocumentReference postRef =
+        FirebaseFirestore.instance.collection('Users Post').doc(widget.postId);
+    if (isLiked) {
+      postRef.update({
+        'Likes': FieldValue.arrayUnion([currentuser.email])
+      });
+    } else {
+      postRef.update({
+        'Likes': FieldValue.arrayRemove([currentuser.email])
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +56,20 @@ class CribPosts extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Colors.grey[400]),
-            child: const Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
+          Column(
+            children: [
+              LikeButton(
+                isLiked: isLiked,
+                onTap: toggleLike,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                widget.likes.length.toString(),
+                style: const TextStyle(color: Colors.grey),
+              )
+            ],
           ),
           const SizedBox(
             width: 20,
@@ -35,7 +78,7 @@ class CribPosts extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                user,
+                widget.user,
                 style: TextStyle(
                   color: Colors.grey[500],
                 ),
@@ -43,7 +86,7 @@ class CribPosts extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(message)
+              Text(widget.message)
             ],
           ),
         ],

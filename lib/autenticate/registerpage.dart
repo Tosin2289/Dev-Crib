@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button.dart';
+import '../widgets/password_field.dart';
 import '../widgets/text_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -93,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  MytextField(
+                  Pfield(
                     controller: passwordcontroller,
                     hintText: 'Password',
                     obscureText: true,
@@ -101,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  MytextField(
+                  Pfield(
                     controller: confirmpasswordcontroller,
                     hintText: 'Confirm Password',
                     obscureText: true,

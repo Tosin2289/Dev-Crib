@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
         'UserEmail': currentUser.email,
         'message': textController.text,
         'TimeStamp': Timestamp.now(),
+        'Likes': [],
       });
     }
     setState(() {
@@ -66,7 +67,11 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final post = snapshot.data!.docs[index];
                         return CribPosts(
-                            message: post['message'], user: post['UserEmail']);
+                          message: post['message'],
+                          user: post['UserEmail'],
+                          postId: post.id,
+                          likes: List<String>.from(post['Likes'] ?? []),
+                        );
                       },
                     );
                   } else if (snapshot.hasError) {

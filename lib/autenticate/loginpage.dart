@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button.dart';
+import '../widgets/password_field.dart';
 import '../widgets/text_field.dart';
 import 'forgotpasswordpage.dart';
 
@@ -81,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  MytextField(
+                  Pfield(
                     controller: passwordcontroller,
                     hintText: 'Password',
                     obscureText: true,

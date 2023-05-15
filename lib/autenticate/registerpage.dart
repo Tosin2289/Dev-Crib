@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:rive/rive.dart';
 import '../widgets/button.dart';
 import '../widgets/password_field.dart';
 import '../widgets/text_field.dart';
@@ -61,10 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
+                  Image.asset("assets/lo.png", height: 150,),
                   const SizedBox(
                     height: 30,
                   ),
@@ -115,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     text: 'Sign up',
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,7 @@
+import 'package:da_hood/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'autenticate/auth.dart';
+
 import 'firebase_options.dart';
 
 Future main() async {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AuthPage(),
+      home: splash(),
     );
   }
 }

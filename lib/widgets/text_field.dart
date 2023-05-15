@@ -14,6 +14,9 @@ class MytextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      obscuringCharacter: '•',
+      keyboardType: TextInputType.multiline,
+      maxLines: null,
       controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(

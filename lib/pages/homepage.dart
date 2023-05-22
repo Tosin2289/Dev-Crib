@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:da_hood/pages/profilepage.dart';
 import 'package:da_hood/widgets/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
 import '../widgets/crib_posts.dart';
+import '../widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,18 +36,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void goToProfilePage() {
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return ProfilePage();
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(
+        ProfileTap: goToProfilePage,
+        OnSignout: signOut,
+      ),
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.grey[300],
         elevation: 0,
         centerTitle: true,
-        title: const Text("Dev Crib"),
-        actions: [
-          IconButton(onPressed: signOut, icon: const Icon(Icons.logout)),
-        ],
+        title: const Text("Dev Crib", style: TextStyle(color: Colors.black)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),

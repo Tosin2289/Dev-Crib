@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
       context: context,
       builder: (context) => const Center(
           child: CircularProgressIndicator(
-        color: Colors.black,
+        color: Colors.blue,
       )),
     );
     if (passwordcontroller.text != confirmpasswordcontroller.text) {

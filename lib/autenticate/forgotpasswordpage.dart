@@ -1,5 +1,3 @@
-import 'package:da_hood/widgets/button.dart';
-import 'package:da_hood/widgets/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -142,7 +140,8 @@ class _ForgotState extends State<Forgot> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade100,
-      appBar: AppBar(elevation: 0,
+      appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: const Text("Forgot Password"),
         backgroundColor: Colors.blue.shade100,

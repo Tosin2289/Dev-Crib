@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) => const Center(
           child: CircularProgressIndicator(
-        color: Colors.black,
+        color: Colors.blue,
       )),
     );
     try {

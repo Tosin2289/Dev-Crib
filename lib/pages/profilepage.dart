@@ -16,45 +16,56 @@ class _ProfilePageState extends State<ProfilePage> {
   final usersCollection = FirebaseFirestore.instance.collection("Users");
   Future<void> editField(String field) async {
     String newValue = "";
-    await showDialog(
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.blue[800],
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.blue[600],
-        title: Text(
-          "Edit $field",
-          style: TextStyle(color: Colors.white),
-        ),
-        content: TextField(
-          autofocus: true,
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: 'Enter new $field',
-            hintStyle: TextStyle(color: Colors.grey),
+      builder: (context) {
+        return SizedBox(
+          height: 250,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Edit $field",
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: TextField(
+                    autofocus: true,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Enter new $field',
+                      hintStyle: TextStyle(color: Colors.white),
+                    ),
+                    onChanged: (value) {
+                      newValue = value;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(newValue);
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    )),
+              ],
+            ),
           ),
-          onChanged: (value) {
-            newValue = value;
-          },
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: Colors.white),
-              )),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(newValue);
-              },
-              child: Text(
-                "Cancel",
-                style: TextStyle(color: Colors.white),
-              )),
-        ],
-      ),
+        );
+      },
     );
+
     if (newValue.trim().length > 0) {
       await usersCollection.doc(currentUser.email).update({field: newValue});
     }
@@ -65,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          iconTheme:  IconThemeData(color: Colors.blue[800]),
+          iconTheme: IconThemeData(color: Colors.blue[800]),
           elevation: 0,
           centerTitle: true,
           title: Text(

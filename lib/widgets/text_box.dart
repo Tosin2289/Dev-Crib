@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
-  void Function()? onPressed;
+  final void Function()? onPressed;
   MyTextBox(
       {Key? key,
       required this.text,
@@ -29,9 +29,9 @@ class MyTextBox extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onPressed,
                 icon: const Icon(Icons.settings),
-                color: Colors.blue,
+                color: Colors.white,
               )
             ],
           ),

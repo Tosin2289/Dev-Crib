@@ -22,11 +22,11 @@ class MytextField extends StatelessWidget {
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.blue),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.blue),
           ),
           hintText: hintText,
           fillColor: Colors.grey[200],

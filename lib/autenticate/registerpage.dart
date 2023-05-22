@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -29,8 +30,17 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailcontroller.text, password: passwordcontroller.text);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailcontroller.text, password: passwordcontroller.text);
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({
+        'username': emailcontroller.text.split('@')[0],
+        'Bio': 'Empty bio...',
+        'Stack': 'Rookie'
+      });
       if (context.mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -86,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
           ClipPath(
             clipper: RoundedDiagonalPathClipper(),
             child: Container(
-              height: 450,
+              height: 400,
               padding: const EdgeInsets.all(10.0),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40.0)),
@@ -96,28 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(
-                    height: 90.0,
-                  ),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        controller: emailcontroller,
-                        style: const TextStyle(color: Colors.blue),
-                        decoration: InputDecoration(
-                            hintText: "Name ",
-                            hintStyle: TextStyle(color: Colors.blue.shade200),
-                            border: InputBorder.none,
-                            icon: const Icon(
-                              Icons.email,
-                              color: Colors.blue,
-                            )),
-                      )),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, bottom: 10.0),
-                    child: Divider(
-                      color: Colors.blue.shade400,
-                    ),
+                    height: 60.0,
                   ),
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -137,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 20.0, bottom: 10.0),
                     child: Divider(
+                      thickness: 0.8,
                       color: Colors.blue.shade400,
                     ),
                   ),
@@ -159,6 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 20.0, bottom: 10.0),
                     child: Divider(
+                      thickness: 0.8,
                       color: Colors.blue.shade400,
                     ),
                   ),
@@ -181,6 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 20.0, bottom: 10.0),
                     child: Divider(
+                      thickness: 0.8,
                       color: Colors.blue.shade400,
                     ),
                   ),
@@ -202,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ],
           ),
           SizedBox(
-            height: 470,
+            height: 420,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(

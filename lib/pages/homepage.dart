@@ -52,13 +52,16 @@ class _HomePageState extends State<HomePage> {
         ProfileTap: goToProfilePage,
         OnSignout: signOut,
       ),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.grey[300],
+        iconTheme: IconThemeData(color: Colors.blue[800]),
+        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text("Dev Crib", style: TextStyle(color: Colors.black)),
+        title: Text("D E V C R I B",
+            style: TextStyle(
+              color: Colors.blue[800],
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
@@ -107,7 +110,12 @@ class _HomePageState extends State<HomePage> {
                       hintText: 'Type in Your Message',
                       obscureText: false),
                 ),
-                IconButton(onPressed: postMessage, icon: const Icon(Icons.send))
+                IconButton(
+                    onPressed: postMessage,
+                    icon: Icon(
+                      Icons.send,
+                      color: Colors.blue[800],
+                    ))
               ],
             ),
           ],

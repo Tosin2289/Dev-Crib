@@ -53,7 +53,7 @@ class _CribPostsState extends State<CribPosts> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(top: 25, left: 5, right: 25),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(12)),
+          color: Colors.blue, borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
           Column(
@@ -67,7 +67,7 @@ class _CribPostsState extends State<CribPosts> {
               ),
               Text(
                 widget.likes.length.toString(),
-                style: const TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.white),
               )
             ],
           ),
@@ -80,13 +80,17 @@ class _CribPostsState extends State<CribPosts> {
               Text(
                 widget.user,
                 style: TextStyle(
-                  color: Colors.grey[500],
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Text(widget.message)
+              Text(
+                widget.message,
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              )
             ],
           ),
         ],

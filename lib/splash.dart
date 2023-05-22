@@ -1,4 +1,3 @@
-import 'package:rive/rive.dart';
 import 'package:flutter/material.dart';
 
 import 'autenticate/auth.dart';
@@ -18,7 +17,7 @@ class _splashState extends State<splash> {
   }
 
   navigatetohome() async {
-    await Future.delayed(const Duration(milliseconds: 2000), (() {}));
+    await Future.delayed(const Duration(milliseconds: 1500), (() {}));
     Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
       return AuthPage();
     })));
@@ -37,17 +36,14 @@ class _splashState extends State<splash> {
           children: [
             Column(
               children: [
-                Container(
-                  height: 350,
-                  width: double.infinity,
-                  child: const RiveAnimation.asset(
-                    'assets/dev3.riv',
-                  ),
+                Image.asset(
+                  'assets/dev.png',
+                  height: 200,
                 ),
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 100,
             ),
             const Text(
               "Made By Phenomes",

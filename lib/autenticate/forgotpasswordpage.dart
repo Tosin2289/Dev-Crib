@@ -2,6 +2,7 @@ import 'package:da_hood/widgets/button.dart';
 import 'package:da_hood/widgets/text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class Forgot extends StatefulWidget {
   const Forgot({Key? key}) : super(key: key);
@@ -36,38 +37,117 @@ class _ForgotState extends State<Forgot> {
     ));
   }
 
+  Widget _buildPageContent(BuildContext context) {
+    return Container(
+      color: Colors.blue.shade100,
+      child: ListView(
+        children: <Widget>[
+          const SizedBox(
+            height: 30.0,
+          ),
+          const CircleAvatar(
+            maxRadius: 50,
+            backgroundColor: Colors.transparent,
+            child: Image(image: AssetImage("assets/pro1.png")),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          _buildLoginForm(),
+        ],
+      ),
+    );
+  }
+
+  Container _buildLoginForm() {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Stack(
+        children: <Widget>[
+          ClipPath(
+            clipper: RoundedDiagonalPathClipper(),
+            child: Container(
+              height: 200,
+              padding: const EdgeInsets.all(10.0),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 90.0,
+                  ),
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                        controller: emailController,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                            hintText: "Email Address",
+                            hintStyle: TextStyle(color: Colors.blue.shade200),
+                            border: InputBorder.none,
+                            icon: const Icon(
+                              Icons.email,
+                              color: Colors.blue,
+                            )),
+                      )),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 10.0),
+                    child: Divider(
+                      color: Colors.blue.shade400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                radius: 40.0,
+                backgroundColor: Colors.blue.shade600,
+                child: const Icon(Icons.person),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 220,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0)),
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: recover,
+                child: const Text("Recover",
+                    style: TextStyle(color: Colors.white70)),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
+      backgroundColor: Colors.blue.shade100,
+      appBar: AppBar(elevation: 0,
         centerTitle: true,
         title: const Text("Forgot Password"),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue.shade100,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Input Your Email Below",
-              style: TextStyle(fontSize: 28),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            MytextField(
-                controller: emailController,
-                hintText: "Email",
-                obscureText: false),
-            const SizedBox(
-              height: 30,
-            ),
-            MyButton(onTap: recover, text: "Recover Password")
-          ],
-        ),
-      ),
+      body: Center(child: _buildPageContent(context)),
     );
   }
 }

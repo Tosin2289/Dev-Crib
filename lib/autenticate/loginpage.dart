@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-
-import '../widgets/button.dart';
-import '../widgets/password_field.dart';
-import '../widgets/text_field.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'forgotpasswordpage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -45,113 +42,163 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SingleChildScrollView(
+  Widget _buildPageContent(BuildContext context) {
+    return Container(
+      color: Colors.blue.shade100,
+      child: ListView(
+        children: <Widget>[
+          const SizedBox(
+            height: 30.0,
+          ),
+          const CircleAvatar(
+            maxRadius: 50,
+            backgroundColor: Colors.transparent,
+            child: Image(image: AssetImage("assets/pro.png")),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          _buildLoginForm(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                onPressed: widget.onTap,
+                child: const Text("Sign Up",
+                    style: TextStyle(color: Colors.blue, fontSize: 18.0)),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Container _buildLoginForm() {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Stack(
+        children: <Widget>[
+          ClipPath(
+            clipper: RoundedDiagonalPathClipper(),
+            child: Container(
+              height: 400,
+              padding: const EdgeInsets.all(10.0),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                color: Colors.white,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/lo.png",
-                    height: 150,
-                  ),
+                children: <Widget>[
                   const SizedBox(
-                    height: 50,
+                    height: 90.0,
                   ),
-                  const Text(
-                    "Welcome back, you've been missed!",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        fontSize: 16),
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                        controller: emailcontroller,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                            hintText: "Email ",
+                            hintStyle: TextStyle(color: Colors.blue.shade200),
+                            border: InputBorder.none,
+                            icon: const Icon(
+                              Icons.email,
+                              color: Colors.blue,
+                            )),
+                      )),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 10.0),
+                    child: Divider(
+                      color: Colors.blue.shade400,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  MytextField(
-                    controller: emailcontroller,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Pfield(
-                    controller: passwordcontroller,
-                    hintText: 'Password',
-                    obscureText: true,
-                  ),
-                  const SizedBox(
-                    height: 20,
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                        obscureText: true,
+                        controller: passwordcontroller,
+                        style: const TextStyle(color: Colors.blue),
+                        decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: TextStyle(color: Colors.blue.shade200),
+                            border: InputBorder.none,
+                            icon: const Icon(
+                              Icons.lock,
+                              color: Colors.blue,
+                            )),
+                      )),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 10.0),
+                    child: Divider(
+                      color: Colors.blue.shade400,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return const Forgot();
-                            },
-                          ));
-                        },
-                        child: const Text(
-                          "Forget password",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                              fontSize: 16),
-                        ),
-                      ),
+                    children: <Widget>[
+                      Container(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const Forgot();
+                                  },
+                                ));
+                              },
+                              child: const Text(
+                                "Forgot Password",
+                                style: TextStyle(color: Colors.black45),
+                              )))
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
-                  ),
-                  MyButton(
-                    onTap: signin,
-                    text: 'Login',
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Not a member?",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      TextButton(
-                        onPressed: widget.onTap,
-                        child: const Text(
-                          "Register now",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ],
+                    height: 10.0,
                   ),
                 ],
               ),
             ),
           ),
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                radius: 40.0,
+                backgroundColor: Colors.blue.shade600,
+                child: const Icon(Icons.person),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 420,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0)),
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: signin,
+                child: const Text("Login",
+                    style: TextStyle(color: Colors.white70)),
+              ),
+            ),
+          )
+        ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: _buildPageContent(context),
     );
   }
 }

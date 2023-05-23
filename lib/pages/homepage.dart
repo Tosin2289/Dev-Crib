@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
+import '../helper/helpermethod.dart';
 import '../widgets/crib_posts.dart';
 import '../widgets/drawer.dart';
 
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text("D E V C R I B",
             style: TextStyle(
+              fontWeight: FontWeight.w600,
               color: Colors.blue[800],
             )),
       ),
@@ -85,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                         return CribPosts(
                           message: post['message'],
                           user: post['UserEmail'],
+                          time: formatDate(post['TimeStamp']),
                           postId: post.id,
                           likes: List<String>.from(post['Likes'] ?? []),
                         );

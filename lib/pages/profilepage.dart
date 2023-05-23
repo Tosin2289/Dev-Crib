@@ -14,9 +14,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final usersCollection = FirebaseFirestore.instance.collection("Users");
+
   Future<void> editField(String field) async {
     String newValue = "";
-    showModalBottomSheet<void>(
+    await showModalBottomSheet<void>(
       backgroundColor: Colors.blue[800],
       context: context,
       builder: (context) {
@@ -43,8 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       hintText: 'Enter new $field',
                       hintStyle: TextStyle(color: Colors.white),
                     ),
-                    onChanged: (value) {
-                      newValue = value;
+                    onChanged: (values) {
+                      newValue = values;
                     },
                   ),
                 ),
@@ -52,9 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 20,
                 ),
                 TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(newValue);
-                    },
+                    onPressed: () => Navigator.of(context).pop(newValue),
                     child: const Text(
                       "Save",
                       style: TextStyle(color: Colors.white, fontSize: 16),

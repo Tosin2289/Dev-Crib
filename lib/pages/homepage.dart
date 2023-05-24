@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return ProfilePage();
+        return const ProfilePage();
       },
     ));
   }
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
         ProfileTap: goToProfilePage,
         OnSignout: signOut,
       ),
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.blue[800]),
         backgroundColor: Colors.transparent,
@@ -112,6 +112,9 @@ class _HomePageState extends State<HomePage> {
                       controller: textController,
                       hintText: 'Type in Your Message',
                       obscureText: false),
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 IconButton(
                     onPressed: postMessage,

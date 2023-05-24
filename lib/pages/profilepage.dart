@@ -18,47 +18,56 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> editField(String field) async {
     String newValue = "";
     await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+      ),
       backgroundColor: Colors.blue[800],
       context: context,
       builder: (context) {
-        return SizedBox(
-          height: 250,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Edit $field",
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: TextField(
-                    autofocus: true,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Enter new $field',
-                      hintStyle: TextStyle(color: Colors.white),
-                    ),
-                    onChanged: (values) {
-                      newValue = values;
-                    },
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: SizedBox(
+            height: 250,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Edit $field",
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(newValue),
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    )),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: TextField(
+                      autofocus: true,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Enter new $field',
+                        hintStyle: TextStyle(color: Colors.white),
+                      ),
+                      onChanged: (values) {
+                        newValue = values;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextButton(
+                      onPressed: () => Navigator.of(context).pop(newValue),
+                      child: const Text(
+                        "Save",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      )),
+                ],
+              ),
             ),
           ),
         );
@@ -73,16 +82,16 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.blue[800]),
           elevation: 0,
           centerTitle: true,
           title: Text(
-            "Profile Page",
+            "P R O F I L E ",
             style: TextStyle(color: Colors.blue[800]),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
         ),
         body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
@@ -136,9 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   MyTextBox(
                     sectionName: 'Tech Field',
                     text: userData['Stack'],
-                    onPressed: () {
-                      editField('Tech Field');
-                    },
+                    onPressed: () => editField('Stack'),
                   ),
                   const SizedBox(
                     height: 50,

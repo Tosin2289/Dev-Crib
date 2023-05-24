@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'my_text_tile.dart';
 
 class MyDrawer extends StatelessWidget {
-  void Function()? ProfileTap;
-  void Function()? OnSignout;
-  MyDrawer({Key? key, required this.ProfileTap, required this.OnSignout})
+  final void Function()? ProfileTap;
+  final void Function()? OnSignout;
+  const MyDrawer({Key? key, required this.ProfileTap, required this.OnSignout})
       : super(key: key);
 
   @override

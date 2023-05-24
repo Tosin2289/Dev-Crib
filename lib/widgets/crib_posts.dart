@@ -67,59 +67,76 @@ class _CribPostsState extends State<CribPosts> {
 
   void showCommentDialog() {
     showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+      ),
       context: context,
       builder: (context) {
-        return SizedBox(
-          height: 300,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const Text(
-                  "Add Comments",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    controller: _commentContoller,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.blue),
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: SizedBox(
+            height: 300,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const Text(
+                    "Add Comments",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      controller: _commentContoller,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                        hintText: "Write a comment..",
+                        hintStyle: TextStyle(color: Colors.blue[400]),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.blue),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Colors.blue),
-                      ),
-                      hintText: "Write a comment..",
-                      hintStyle: TextStyle(color: Colors.blue[400]),
                     ),
                   ),
-                ),
-                OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.blue)),
-                    onPressed: () {
-                      addComment(_commentContoller.text);
-                      _commentContoller.clear();
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      "Post Comment",
-                      style: TextStyle(color: Colors.blue),
-                    ))
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: SizedBox(
+                      height: 40,
+                      child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              side: const BorderSide(color: Colors.blue)),
+                          onPressed: () {
+                            addComment(_commentContoller.text);
+                            _commentContoller.clear();
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Post Comment",
+                            style: TextStyle(color: Colors.blue),
+                          )),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -133,7 +150,8 @@ class _CribPostsState extends State<CribPosts> {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(top: 25, left: 5, right: 25),
       decoration: BoxDecoration(
-          color: Colors.blue, borderRadius: BorderRadius.circular(12)),
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -161,7 +179,7 @@ class _CribPostsState extends State<CribPosts> {
                   ),
                   const Text(
                     " . ",
-                    style: const TextStyle(color: Colors.black, fontSize: 14),
+                    style: TextStyle(color: Colors.black, fontSize: 14),
                   ),
                   Text(
                     widget.time,

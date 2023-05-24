@@ -4,7 +4,7 @@ class MyTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
   final void Function()? onPressed;
-  MyTextBox(
+  const MyTextBox(
       {Key? key,
       required this.text,
       required this.sectionName,

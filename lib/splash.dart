@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'autenticate/auth.dart';
 
-class splash extends StatefulWidget {
-  const splash({Key? key}) : super(key: key);
+class Splash extends StatefulWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
-  State<splash> createState() => _splashState();
+  State<Splash> createState() => _SplashState();
 }
 
-class _splashState extends State<splash> {
+class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
@@ -18,8 +18,8 @@ class _splashState extends State<splash> {
 
   navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 1500), (() {}));
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) {
-      return AuthPage();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: ((Context) {
+      return const AuthPage();
     })));
   }
 

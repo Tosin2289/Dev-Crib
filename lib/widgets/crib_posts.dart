@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../helper/helpermethod.dart';
 import 'comment_button.dart';
+import 'delete_button.dart';
 import 'like_button.dart';
 
 class CribPosts extends StatefulWidget {
@@ -144,6 +145,57 @@ class _CribPostsState extends State<CribPosts> {
     );
   }
 
+  void deletepost() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete Post"),
+        content: const Text("Are you sure you want to delete this post?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {
+              final commentsDocs = await FirebaseFirestore.instance
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .collection("Comments")
+                  .get();
+              for (var doc in commentsDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection("User Posts")
+                    .doc(widget.postId)
+                    .collection("Comments")
+                    .doc(doc.id)
+                    .delete();
+              }
+              FirebaseFirestore.instance
+                  .collection("User Posts")
+                  .doc(widget.postId)
+                  .delete()
+                  .then((value) =>
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Post deleted"),
+                        backgroundColor: Colors.red,
+                      )))
+                  .catchError((error) =>
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Failed to delete post: $error"),
+                        backgroundColor: Colors.red,
+                      )));
+              Navigator.pop(context);
+            },
+            child: Text("Delete"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -158,35 +210,47 @@ class _CribPostsState extends State<CribPosts> {
           const SizedBox(
             width: 5,
           ),
-          Column(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.message,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.user,
-                    style: const TextStyle(color: Colors.black, fontSize: 14),
-                  ),
-                  const Text(
-                    " . ",
-                    style: TextStyle(color: Colors.black, fontSize: 14),
+                  const SizedBox(
+                    height: 10,
                   ),
                   Text(
-                    widget.time,
-                    style: const TextStyle(color: Colors.black, fontSize: 14),
-                  )
+                    widget.message,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        widget.user,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                      const Text(
+                        " . ",
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ),
+                      Text(
+                        widget.time,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                      )
+                    ],
+                  ),
                 ],
               ),
+              if (widget.user == currentuser.email)
+                DeleteButton(
+                  onPressed: deletepost,
+                )
             ],
           ),
           const SizedBox(

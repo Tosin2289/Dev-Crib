@@ -145,7 +145,7 @@ class _CribPostsState extends State<CribPosts> {
     );
   }
 
-  void deletepost() {
+  void deletepost() async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -174,7 +174,7 @@ class _CribPostsState extends State<CribPosts> {
                     .delete();
               }
               FirebaseFirestore.instance
-                  .collection("User Posts")
+                  .collection("Users Post")
                   .doc(widget.postId)
                   .delete()
                   .then((value) =>
@@ -227,16 +227,16 @@ class _CribPostsState extends State<CribPosts> {
                         fontWeight: FontWeight.bold,
                         fontSize: 18),
                   ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.user,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 12),
                       ),
-                      const Text(
-                        " . ",
-                        style: TextStyle(color: Colors.black, fontSize: 12),
+                      SizedBox(
+                        height: 4,
                       ),
                       Text(
                         widget.time,

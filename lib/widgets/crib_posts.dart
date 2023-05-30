@@ -232,16 +232,16 @@ class _CribPostsState extends State<CribPosts> {
                       Text(
                         widget.user,
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 14),
+                            const TextStyle(color: Colors.black, fontSize: 12),
                       ),
                       const Text(
                         " . ",
-                        style: TextStyle(color: Colors.black, fontSize: 14),
+                        style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
                       Text(
                         widget.time,
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 14),
+                            const TextStyle(color: Colors.black, fontSize: 12),
                       )
                     ],
                   ),

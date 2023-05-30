@@ -11,7 +11,7 @@ class Forgot extends StatefulWidget {
 }
 
 class _ForgotState extends State<Forgot> {
-  late BannerAd _bannerAd;
+  BannerAd? _bannerAd;
   bool _isAdloaded = false;
 
   @override
@@ -30,10 +30,12 @@ class _ForgotState extends State<Forgot> {
               _isAdloaded = true;
             });
           },
-          onAdFailedToLoad: (ad, error) {},
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
         ),
         request: AdRequest());
-    _bannerAd.load();
+    _bannerAd!.load();
   }
 
   final emailController = TextEditingController();
@@ -168,9 +170,9 @@ class _ForgotState extends State<Forgot> {
     return Scaffold(
       bottomNavigationBar: _isAdloaded
           ? Container(
-              height: _bannerAd.size.height.toDouble(),
-              width: _bannerAd.size.width.toDouble(),
-              child: AdWidget(ad: _bannerAd),
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
             )
           : const SizedBox(),
       backgroundColor: Colors.blue.shade100,

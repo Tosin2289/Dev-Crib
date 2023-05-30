@@ -13,7 +13,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late BannerAd _bannerAd;
+  BannerAd? _bannerAd;
   bool _isAdloaded = false;
 
   @override
@@ -32,10 +32,12 @@ class _ProfilePageState extends State<ProfilePage> {
               _isAdloaded = true;
             });
           },
-          onAdFailedToLoad: (ad, error) {},
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
         ),
         request: AdRequest());
-    _bannerAd.load();
+    _bannerAd!.load();
   }
 
   final currentUser = FirebaseAuth.instance.currentUser!;
@@ -110,9 +112,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
         bottomNavigationBar: _isAdloaded
             ? Container(
-                height: _bannerAd.size.height.toDouble(),
-                width: _bannerAd.size.width.toDouble(),
-                child: AdWidget(ad: _bannerAd),
+                height: _bannerAd!.size.height.toDouble(),
+                width: _bannerAd!.size.width.toDouble(),
+                child: AdWidget(ad: _bannerAd!),
               )
             : const SizedBox(),
         backgroundColor: Theme.of(context).colorScheme.background,

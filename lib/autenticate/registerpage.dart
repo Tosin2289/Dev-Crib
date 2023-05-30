@@ -13,7 +13,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  late BannerAd _bannerAd;
+  BannerAd? _bannerAd;
   bool _isAdloaded = false;
 
   @override
@@ -32,10 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
               _isAdloaded = true;
             });
           },
-          onAdFailedToLoad: (ad, error) {},
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
         ),
         request: AdRequest());
-    _bannerAd.load();
+    _bannerAd!.load();
   }
 
   final namecontroller = TextEditingController();
@@ -245,9 +247,9 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       bottomNavigationBar: _isAdloaded
           ? Container(
-              height: _bannerAd.size.height.toDouble(),
-              width: _bannerAd.size.width.toDouble(),
-              child: AdWidget(ad: _bannerAd),
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
             )
           : const SizedBox(),
       backgroundColor: Colors.grey[300],

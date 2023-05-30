@@ -13,7 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late BannerAd _bannerAd;
+  BannerAd? _bannerAd;
   bool _isAdloaded = false;
 
   @override
@@ -32,10 +32,12 @@ class _LoginPageState extends State<LoginPage> {
               _isAdloaded = true;
             });
           },
-          onAdFailedToLoad: (ad, error) {},
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+          },
         ),
         request: AdRequest());
-    _bannerAd.load();
+    _bannerAd!.load();
   }
 
   final emailcontroller = TextEditingController();
@@ -226,9 +228,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       bottomNavigationBar: _isAdloaded
           ? Container(
-              height: _bannerAd.size.height.toDouble(),
-              width: _bannerAd.size.width.toDouble(),
-              child: AdWidget(ad: _bannerAd),
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
             )
           : const SizedBox(),
       backgroundColor: Colors.grey[300],

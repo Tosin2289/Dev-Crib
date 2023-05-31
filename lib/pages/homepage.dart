@@ -46,9 +46,29 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
+  bool isScrolledAlready = false;
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      floatingActionButton: isScrolledAlready
+          ? SizedBox()
+          : FloatingActionButton(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              onPressed: () {
+                _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: Duration(milliseconds: 800),
+                    curve: Curves.bounceIn);
+                isScrolledAlready = true;
+              },
+              child: Icon(
+                Icons.keyboard_arrow_down,
+                size: 40,
+              ),
+            ),
       drawer: MyDrawer(
         ProfileTap: goToProfilePage,
         OnSignout: signOut,
@@ -81,6 +101,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
+                      controller: _scrollController,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final post = snapshot.data!.docs[index];

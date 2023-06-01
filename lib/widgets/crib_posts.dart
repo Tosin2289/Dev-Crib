@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:da_hood/widgets/comments.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import '../helper/helpermethod.dart';
 import 'comment_button.dart';
 import 'delete_button.dart';

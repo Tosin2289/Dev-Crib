@@ -53,22 +53,25 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       floatingActionButton: isScrolledAlready
-          ? SizedBox()
-          : FloatingActionButton(
+          ? FloatingActionButton(
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
               onPressed: () {
                 _scrollController.animateTo(
                     _scrollController.position.maxScrollExtent,
-                    duration: Duration(milliseconds: 800),
+                    duration: Duration(milliseconds: 500),
                     curve: Curves.bounceIn);
-                isScrolledAlready = true;
+
+                setState(() {
+                  isScrolledAlready = true;
+                });
               },
               child: Icon(
                 Icons.keyboard_arrow_down,
                 size: 40,
               ),
-            ),
+            )
+          : SizedBox(),
       drawer: MyDrawer(
         ProfileTap: goToProfilePage,
         OnSignout: signOut,
